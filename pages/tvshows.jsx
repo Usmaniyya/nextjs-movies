@@ -41,7 +41,7 @@ const tvshows = ({ tvshows }) => {
           <h3 className="font-bold text-5xl uppercase">
             {tvshows[currentIndex].original_name}
           </h3>
-          <p className="text-lg font-light w-3/5">
+          <p className="text-lg font-light md:w-3/5">
             {tvshows[currentIndex].overview}
           </p>
           <div className="flex items-center space-x-10">

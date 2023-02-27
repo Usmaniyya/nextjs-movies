@@ -38,7 +38,7 @@ const Home = ({ movies }) => {
           <h3 className="font-bold md:text-5xl text-2xl uppercase">
             {movies[currentIndex].title}
           </h3>
-          <p className="text-lg font-light w-3/5">
+          <p className="text-lg font-light md:w-3/5">
             {movies[currentIndex].overview}
           </p>
           <div className="flex items-center space-x-10">
