@@ -1,10 +1,82 @@
 import Head from 'next/head'
 import { Navbar } from '../components'
 import React, { useEffect, useState } from 'react'
-import Image from 'next/image'
 import { Calendar, Star1 } from 'iconsax-react'
 import { Swiper, SwiperSlide } from 'swiper/react'
+import { motion } from 'framer-motion'
 import 'swiper/css'
+
+const homeVariants = {
+  hidden: {
+    opacity: 0,
+    x: '-100vw',
+  },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      delay: 1.5,
+      duration: 1,
+      type: 'spring',
+      stiffness: 200,
+    },
+  },
+  exit: {
+    x: '-100vw',
+    transition: {
+      ease: 'easeInOut',
+    },
+  },
+}
+
+const headingVariants = {
+  hidden: {
+    opacity: 0,
+    y: '-100vh',
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: 1.5,
+      duration: 1,
+      type: 'spring',
+      stiffness: 200,
+    },
+  },
+}
+const overviewVariants = {
+  hidden: {
+    opacity: 0,
+    y: '100vh',
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: 1.6,
+      duration: 1,
+      type: 'spring',
+      stiffness: 170,
+    },
+  },
+}
+const dateVariants = {
+  hidden: {
+    opacity: 0,
+    x: '100vh',
+  },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      delay: 1.7,
+      duration: 1,
+      type: 'spring',
+      stiffness: 150,
+    },
+  },
+}
 
 const Home = ({ movies }) => {
   const imageBaseURL = 'https://image.tmdb.org/t/p/original'
@@ -16,7 +88,10 @@ const Home = ({ movies }) => {
     setCurrentIndex(index)
   }
   return (
-    <div
+    <motion.div
+      initial="hidden"
+      animate="visible"
+      exit="exit"
       className="h-screen py-2 app md:px-32 px-5"
       style={{
         backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url(${backgroundImg})`,
@@ -33,15 +108,27 @@ const Home = ({ movies }) => {
         />
       </Head>
       <Navbar />
-      <main className="w-full text-white font-oswald">
-        <div className="md:pr-96 md:mt-10 mt-5 space-y-5">
-          <h3 className="font-bold md:text-5xl text-2xl uppercase">
+      <motion.main
+        variants={homeVariants}
+        className="w-full text-white font-oswald"
+      >
+        <div className="md:pr-96 md:mt-8 mt-5 space-y-5">
+          <motion.h3
+            variants={headingVariants}
+            className="font-bold md:text-4xl text-2xl uppercase"
+          >
             {movies[currentIndex].title}
-          </h3>
-          <p className="text-lg font-light md:w-3/5">
+          </motion.h3>
+          <p
+            variants={overviewVariants}
+            className="text-lg font-light md:w-4/5"
+          >
             {movies[currentIndex].overview}
           </p>
-          <div className="flex items-center space-x-10">
+          <motion.div
+            variants={dateVariants}
+            className="flex items-center space-x-10"
+          >
             <p className="flex items-center space-x-5">
               <Calendar size={32} color="#fff" variant="Bulk" />
               <span>{movies[currentIndex].release_date}</span>
@@ -50,9 +137,9 @@ const Home = ({ movies }) => {
               <Star1 size={32} color="#fff" variant="Bulk" />
               <span>{movies[currentIndex].vote_average}/10</span>
             </p>
-          </div>
+          </motion.div>
         </div>
-        <div className="bg-white bg-opacity-20 p-3 mt-24">
+        <div className="bg-white bg-opacity-20 p-3 mt-8">
           <Swiper
             slidesPerView={2}
             spaceBetween={10}
@@ -89,8 +176,8 @@ const Home = ({ movies }) => {
             ))}
           </Swiper>
         </div>
-      </main>
-    </div>
+      </motion.main>
+    </motion.div>
   )
 }
 
